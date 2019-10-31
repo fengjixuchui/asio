@@ -328,6 +328,38 @@
 # endif // !defined(ASIO_DISABLE_ALIAS_TEMPLATES)
 #endif // !defined(ASIO_HAS_ALIAS_TEMPLATES)
 
+// Support return type deduction on compilers known to allow it.
+#if !defined(ASIO_HAS_RETURN_TYPE_DEDUCTION)
+# if !defined(ASIO_DISABLE_RETURN_TYPE_DEDUCTION)
+#  if defined(__clang__)
+#   if __has_feature(__cxx_return_type_deduction__)
+#    define ASIO_HAS_RETURN_TYPE_DEDUCTION 1
+#   endif // __has_feature(__cxx_alias_templates__)
+#  elif (__cplusplus >= 201402)
+#   define ASIO_HAS_RETURN_TYPE_DEDUCTION 1
+#  endif // (__cplusplus >= 201402)
+# endif // !defined(ASIO_DISABLE_RETURN_TYPE_DEDUCTION)
+#endif // !defined(ASIO_HAS_RETURN_TYPE_DEDUCTION)
+
+// Support default function template arguments on compilers known to allow it.
+#if !defined(ASIO_HAS_DEFAULT_FUNCTION_TEMPLATE_ARGUMENTS)
+# if !defined(ASIO_DISABLE_DEFAULT_FUNCTION_TEMPLATE_ARGUMENTS)
+#  if (__cplusplus >= 201103)
+#   define ASIO_HAS_DEFAULT_FUNCTION_TEMPLATE_ARGUMENTS 1
+#  endif // (__cplusplus >= 201103)
+# endif // !defined(ASIO_DISABLE_DEFAULT_FUNCTION_TEMPLATE_ARGUMENTS)
+#endif // !defined(ASIO_HAS_DEFAULT_FUNCTION_TEMPLATE_ARGUMENTS)
+
+// Support concepts on compilers known to allow them.
+#if !defined(ASIO_HAS_CONCEPTS)
+# if !defined(ASIO_DISABLE_CONCEPTS)
+#  if __cpp_concepts
+#   define ASIO_HAS_CONCEPTS 1
+#   define ASIO_CONCEPT concept bool
+#  endif // __cpp_concepts
+# endif // !defined(ASIO_DISABLE_CONCEPTS)
+#endif // !defined(ASIO_HAS_CONCEPTS)
+
 // Standard library support for system errors.
 #if !defined(ASIO_HAS_STD_SYSTEM_ERROR)
 # if !defined(ASIO_DISABLE_STD_SYSTEM_ERROR)
