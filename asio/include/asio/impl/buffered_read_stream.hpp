@@ -2,7 +2,7 @@
 // impl/buffered_read_stream.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2020 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -147,7 +147,8 @@ namespace detail
     typedef typename remove_reference<
       Stream>::type::lowest_layer_type::executor_type executor_type;
 
-    explicit initiate_async_buffered_fill(Stream& next_layer)
+    explicit initiate_async_buffered_fill(
+        typename remove_reference<Stream>::type& next_layer)
       : next_layer_(next_layer)
     {
     }
@@ -177,7 +178,7 @@ namespace detail
     }
 
   private:
-    Stream& next_layer_;
+    typename remove_reference<Stream>::type& next_layer_;
   };
 } // namespace detail
 
@@ -364,7 +365,8 @@ namespace detail
     typedef typename remove_reference<
       Stream>::type::lowest_layer_type::executor_type executor_type;
 
-    explicit initiate_async_buffered_read_some(Stream& next_layer)
+    explicit initiate_async_buffered_read_some(
+        typename remove_reference<Stream>::type& next_layer)
       : next_layer_(next_layer)
     {
     }
@@ -403,7 +405,7 @@ namespace detail
     }
 
   private:
-    Stream& next_layer_;
+    typename remove_reference<Stream>::type& next_layer_;
   };
 } // namespace detail
 

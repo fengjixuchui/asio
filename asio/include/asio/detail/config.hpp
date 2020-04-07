@@ -2,7 +2,7 @@
 // detail/config.hpp
 // ~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2020 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -112,9 +112,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 5)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_MOVE 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 5)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -124,10 +124,10 @@
 #  endif // defined(ASIO_MSVC)
 #  if defined(__INTEL_CXX11_MODE__)
 #    if defined(__INTEL_COMPILER) && (__INTEL_COMPILER >= 1500)
-#      define BOOST_ASIO_HAS_MOVE 1
+#      define ASIO_HAS_MOVE 1
 #    endif // defined(__INTEL_COMPILER) && (__INTEL_COMPILER >= 1500)
 #    if defined(__ICL) && (__ICL >= 1500)
-#      define BOOST_ASIO_HAS_MOVE 1
+#      define ASIO_HAS_MOVE 1
 #    endif // defined(__ICL) && (__ICL >= 1500)
 #  endif // defined(__INTEL_CXX11_MODE__)
 # endif // !defined(ASIO_DISABLE_MOVE)
@@ -182,9 +182,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_VARIADIC_TEMPLATES 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -199,9 +199,9 @@
 #if !defined(ASIO_DELETED)
 # if defined(__GNUC__)
 #  if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
-#   if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#   if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #    define ASIO_DELETED = delete
-#   endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#   endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #  endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
 # endif // defined(__GNUC__)
 # if defined(__clang__)
@@ -229,9 +229,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_CONSTEXPR 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -262,10 +262,10 @@
 #   endif // __has_feature(__cxx_noexcept__)
 #  elif defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #      define ASIO_NOEXCEPT noexcept(true)
 #      define ASIO_NOEXCEPT_OR_NOTHROW noexcept(true)
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
 #  elif defined(ASIO_MSVC)
 #   if (_MSC_VER >= 1900)
@@ -292,9 +292,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_DECLTYPE 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -315,9 +315,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_ALIAS_TEMPLATES 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -337,7 +337,11 @@
 #   endif // __has_feature(__cxx_alias_templates__)
 #  elif (__cplusplus >= 201402)
 #   define ASIO_HAS_RETURN_TYPE_DEDUCTION 1
-#  endif // (__cplusplus >= 201402)
+#  elif defined(__cpp_return_type_deduction)
+#   if (__cpp_return_type_deduction >= 201304)
+#    define ASIO_HAS_RETURN_TYPE_DEDUCTION 1
+#   endif // (__cpp_return_type_deduction >= 201304)
+#  endif // defined(__cpp_return_type_deduction)
 # endif // !defined(ASIO_DISABLE_RETURN_TYPE_DEDUCTION)
 #endif // !defined(ASIO_HAS_RETURN_TYPE_DEDUCTION)
 
@@ -353,10 +357,14 @@
 // Support concepts on compilers known to allow them.
 #if !defined(ASIO_HAS_CONCEPTS)
 # if !defined(ASIO_DISABLE_CONCEPTS)
-#  if __cpp_concepts
+#  if defined(__cpp_concepts)
 #   define ASIO_HAS_CONCEPTS 1
-#   define ASIO_CONCEPT concept bool
-#  endif // __cpp_concepts
+#   if (__cpp_concepts >= 201707)
+#    define ASIO_CONCEPT concept
+#   else // (__cpp_concepts >= 201707)
+#    define ASIO_CONCEPT concept bool
+#   endif // (__cpp_concepts >= 201707)
+#  endif // defined(__cpp_concepts)
 # endif // !defined(ASIO_DISABLE_CONCEPTS)
 #endif // !defined(ASIO_HAS_CONCEPTS)
 
@@ -374,9 +382,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_SYSTEM_ERROR 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -397,9 +405,9 @@
 #  endif // __has_feature(__cxx_noexcept__)
 # elif defined(__GNUC__)
 #  if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
-#   if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#   if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_ERROR_CATEGORY_NOEXCEPT noexcept(true)
-#   endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#   endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #  endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
 # elif defined(ASIO_MSVC)
 #  if (_MSC_VER >= 1900)
@@ -425,9 +433,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_ARRAY 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -450,9 +458,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_SHARED_PTR 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -475,9 +483,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_ALLOCATOR_ARG 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -508,9 +516,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_ATOMIC 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -537,12 +545,12 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_CHRONO 1
 #     if ((__GNUC__ == 4) && (__GNUC_MINOR__ == 6))
 #      define ASIO_HAS_STD_CHRONO_MONOTONIC_CLOCK 1
 #     endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ == 6))
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -590,9 +598,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_ADDRESSOF 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -615,9 +623,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 5)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_FUNCTION 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 5)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -642,9 +650,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 5)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_TYPE_TRAITS 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 5)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -664,9 +672,9 @@
 #   endif // __has_feature(__cxx_rvalue_references__)
 #  elif defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_NULLPTR 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -688,9 +696,9 @@
 #   endif // (__cplusplus >= 201103)
 #  elif defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_CXX11_ALLOCATORS 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -713,9 +721,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 5)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_CSTDINT 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 5)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -740,9 +748,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_THREAD 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -767,9 +775,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_MUTEX_AND_CONDVAR 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -794,9 +802,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_CALL_ONCE 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -821,9 +829,9 @@
 #  endif // defined(__clang__)
 #  if defined(__GNUC__)
 #   if ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_FUTURE 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7)) || (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -911,9 +919,9 @@
 # if !defined(ASIO_DISABLE_STD_IOSTREAM_MOVE)
 #  if defined(__GNUC__)
 #   if (__GNUC__ > 4)
-#    if defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    if (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #     define ASIO_HAS_STD_IOSTREAM_MOVE 1
-#    endif // defined(__GXX_EXPERIMENTAL_CXX0X__)
+#    endif // (__cplusplus >= 201103) || defined(__GXX_EXPERIMENTAL_CXX0X__)
 #   endif // (__GNUC__ > 4)
 #  endif // defined(__GNUC__)
 #  if defined(ASIO_MSVC)
@@ -939,7 +947,8 @@
 #if !defined(ASIO_WINDOWS_APP)
 # if defined(_WIN32_WINNT) && (_WIN32_WINNT >= 0x0603)
 #  include <winapifamily.h>
-#  if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) \
+#  if (WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) \
+       || WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_TV_TITLE)) \
    && !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 #   define ASIO_WINDOWS_APP 1
 #  endif // WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
