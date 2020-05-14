@@ -70,7 +70,7 @@ awaitable<void, Executor> co_spawn_entry_point(
   auto handler_work = make_work_guard(handler, ex);
 
   (void) co_await (post)(spawn_work.get_executor(),
-      use_awaitable_t<Executor>{});
+      use_awaitable_t<Executor>{__FILE__, __LINE__, "co_spawn_entry_point"});
 
   std::exception_ptr e = nullptr;
   try
@@ -133,7 +133,7 @@ co_spawn(const Executor& ex, F&& f, CompletionToken&& token,
     >::type*)
 {
   return async_initiate<CompletionToken,
-    typename detail::awaitable_signature<typename result_of<F()>::type>>(
+    typename detail::awaitable_signature<typename result_of<F()>::type>::type>(
       detail::initiate_co_spawn<
         typename result_of<F()>::type::executor_type>(ex),
       token, std::forward<F>(f));
