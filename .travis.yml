@@ -5,9 +5,48 @@ dist: xenial
 cache:
   directories:
     - ${TRAVIS_BUILD_DIR}/boost_1_64_0
+    - ${TRAVIS_BUILD_DIR}/boost_1_73_0
 
 matrix:
   include:
+    #
+    #---------------------------------------------------------------------------
+    # Linux / g++-9
+    #---------------------------------------------------------------------------
+    #
+    # Linux / g++-9 -std=c++2a / -O2 / standalone
+    #
+    - os: linux
+      dist: bionic
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-9
+      env:
+        - CXXFLAGS="-std=c++2a -fconcepts -Wall -Wextra -O2"
+        - CONFIGFLAGS="--with-boost=no"
+        - MATRIX_EVAL="CC=gcc-9 CXX=g++-9"
+      compiler: gcc
+    #
+    # Linux / g++-9 -std=c++17 / -O2 / boost 1.73
+    #
+    - os: linux
+      dist: bionic
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-9
+      env:
+        - BOOST_DIR="boost_1_73_0"
+        - BOOST_URL="https://sourceforge.net/projects/boost/files/boost/1.73.0/boost_1_73_0.tar.bz2/download"
+        - CXXFLAGS="-std=c++17 -Wall -Wextra -O2"
+        - CONFIGFLAGS="--with-boost=$PWD/$BOOST_DIR"
+        - MATRIX_EVAL="CC=gcc-9 CXX=g++-9"
+      compiler: gcc
     #
     #---------------------------------------------------------------------------
     # Linux / g++-6
@@ -114,7 +153,7 @@ matrix:
             - g++-6
       env:
         - BOOST_DIR="boost_1_64_0"
-        - BOOST_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.bz2"
+        - BOOST_URL="https://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.bz2/download"
         - CXXFLAGS="-Wall -Wextra -O2"
         - CONFIGFLAGS=""
         - MATRIX_EVAL="CC=gcc-6 CXX=g++-6"
@@ -131,7 +170,7 @@ matrix:
             - g++-6
       env:
         - BOOST_DIR="boost_1_64_0"
-        - BOOST_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.bz2"
+        - BOOST_URL="https://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.bz2/download"
         - CXXFLAGS="-Wall -Wextra -O0 -fno-inline -DASIO_DISABLE_EPOLL"
         - CONFIGFLAGS=""
         - MATRIX_EVAL="CC=gcc-6 CXX=g++-6"
@@ -148,7 +187,7 @@ matrix:
             - g++-6
       env:
         - BOOST_DIR="boost_1_64_0"
-        - BOOST_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.bz2"
+        - BOOST_URL="https://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.bz2/download"
         - CXXFLAGS="-Wall -Wextra -O0 -fno-inline"
         - CONFIGFLAGS="--enable-separate-compilation"
         - MATRIX_EVAL="CC=gcc-6 CXX=g++-6"
@@ -199,7 +238,7 @@ matrix:
             - g++-4.8
       env:
         - BOOST_DIR="boost_1_64_0"
-        - BOOST_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.bz2"
+        - BOOST_URL="https://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.bz2/download"
         - CXXFLAGS="-Wall -Wextra -O2"
         - CONFIGFLAGS=""
         - MATRIX_EVAL="CC=gcc-4.8 CXX=g++-4.8"
@@ -216,7 +255,7 @@ matrix:
             - g++-4.8
       env:
         - BOOST_DIR="boost_1_64_0"
-        - BOOST_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.bz2"
+        - BOOST_URL="https://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.bz2/download"
         - CXXFLAGS="-std=c++11 -Wall -Wextra -O2"
         - CONFIGFLAGS=""
         - MATRIX_EVAL="CC=gcc-4.8 CXX=g++-4.8"
@@ -299,7 +338,7 @@ matrix:
     - os: osx
       env:
         - BOOST_DIR="boost_1_64_0"
-        - BOOST_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.bz2"
+        - BOOST_URL="https://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.bz2/download"
         - CXXFLAGS="-Wall -Wextra -O2"
         - CONFIGFLAGS=""
       osx_image: xcode10.1
@@ -309,7 +348,7 @@ matrix:
     - os: osx
       env:
         - BOOST_DIR="boost_1_64_0"
-        - BOOST_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.bz2"
+        - BOOST_URL="https://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.bz2/download"
         - CXXFLAGS="-Wall -Wextra -O0 -fno-inline"
         - CONFIGFLAGS="--enable-separate-compilation"
       osx_image: xcode10.1
