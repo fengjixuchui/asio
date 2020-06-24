@@ -145,6 +145,11 @@ AC_COMPILE_IFELSE(
 AC_MSG_CHECKING([whether C++14 is enabled])
 AC_COMPILE_IFELSE(
   [AC_LANG_PROGRAM(
+    [[#if defined(__GNUC__)]]
+    [[# if (__GNUC__ <= 6)]]
+    [[#  error C++14 support on this compiler not sufficiently compliant]]
+    [[# endif]]
+    [[#endif]]
     [[#if __cplusplus < 201402L]]
     [[#error C++14 not available]]
     [[#endif]])],
@@ -218,6 +223,7 @@ AC_OUTPUT([
   include/Makefile
   src/Makefile
   src/tests/Makefile
+  src/tests/properties/Makefile
   src/examples/cpp03/Makefile
   src/examples/cpp11/Makefile
   src/examples/cpp14/Makefile

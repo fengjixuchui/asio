@@ -9,6 +9,8 @@ endif
 LDADD = libasio.a
 endif
 
+SUBDIRS = properties
+
 check_PROGRAMS = \
 	unit/associated_allocator \
 	unit/associated_executor \
@@ -41,6 +43,17 @@ check_PROGRAMS = \
 	unit/detached \
 	unit/dispatch \
 	unit/error \
+	unit/execution/any_executor \
+	unit/execution/blocking \
+	unit/execution/blocking_adaptation \
+	unit/execution/bulk_guarantee \
+	unit/execution/context_as \
+	unit/execution/execute \
+	unit/execution/invocable_archetype \
+	unit/execution/mapping \
+	unit/execution/outstanding_work \
+	unit/execution/prefer_only \
+	unit/execution/relationship \
 	unit/execution_context \
 	unit/executor \
 	unit/executor_work_guard \
@@ -96,6 +109,7 @@ check_PROGRAMS = \
 	unit/serial_port_base \
 	unit/signal_set \
 	unit/socket_base \
+	unit/static_thread_pool \
 	unit/steady_timer \
 	unit/strand \
 	unit/streambuf \
@@ -182,6 +196,17 @@ TESTS = \
 	unit/detached \
 	unit/dispatch \
 	unit/error \
+	unit/execution/any_executor \
+	unit/execution/blocking \
+	unit/execution/blocking_adaptation \
+	unit/execution/bulk_guarantee \
+	unit/execution/context_as \
+	unit/execution/execute \
+	unit/execution/invocable_archetype \
+	unit/execution/mapping \
+	unit/execution/outstanding_work \
+	unit/execution/prefer_only \
+	unit/execution/relationship \
 	unit/execution_context \
 	unit/executor \
 	unit/executor_work_guard \
@@ -232,6 +257,7 @@ TESTS = \
 	unit/serial_port_base \
 	unit/signal_set \
 	unit/socket_base \
+	unit/static_thread_pool \
 	unit/steady_timer \
 	unit/strand \
 	unit/streambuf \
@@ -323,6 +349,17 @@ unit_defer_SOURCES = unit/defer.cpp
 unit_detached_SOURCES = unit/detached.cpp
 unit_dispatch_SOURCES = unit/dispatch.cpp
 unit_error_SOURCES = unit/error.cpp
+unit_execution_any_executor_SOURCES = unit/execution/any_executor.cpp
+unit_execution_blocking_SOURCES = unit/execution/blocking.cpp
+unit_execution_blocking_adaptation_SOURCES = unit/execution/blocking_adaptation.cpp
+unit_execution_bulk_guarantee_SOURCES = unit/execution/bulk_guarantee.cpp
+unit_execution_context_as_SOURCES = unit/execution/context_as.cpp
+unit_execution_execute_SOURCES = unit/execution/execute.cpp
+unit_execution_invocable_archetype_SOURCES = unit/execution/invocable_archetype.cpp
+unit_execution_mapping_SOURCES = unit/execution/mapping.cpp
+unit_execution_outstanding_work_SOURCES = unit/execution/outstanding_work.cpp
+unit_execution_prefer_only_SOURCES = unit/execution/prefer_only.cpp
+unit_execution_relationship_SOURCES = unit/execution/relationship.cpp
 unit_execution_context_SOURCES = unit/execution_context.cpp
 unit_executor_SOURCES = unit/executor.cpp
 unit_executor_work_guard_SOURCES = unit/executor_work_guard.cpp
@@ -378,6 +415,7 @@ unit_serial_port_SOURCES = unit/serial_port.cpp
 unit_serial_port_base_SOURCES = unit/serial_port_base.cpp
 unit_signal_set_SOURCES = unit/signal_set.cpp
 unit_socket_base_SOURCES = unit/socket_base.cpp
+unit_static_thread_pool_SOURCES = unit/static_thread_pool.cpp
 unit_steady_timer_SOURCES = unit/steady_timer.cpp
 unit_strand_SOURCES = unit/strand.cpp
 unit_streambuf_SOURCES = unit/streambuf.cpp
