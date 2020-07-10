@@ -17,7 +17,6 @@
 
 #include "asio/detail/config.hpp"
 #include "asio/detail/type_traits.hpp"
-#include "asio/execution/executor.hpp"
 #include "asio/is_applicable_property.hpp"
 #include "asio/prefer.hpp"
 #include "asio/query.hpp"
@@ -31,14 +30,15 @@ namespace asio {
 
 namespace execution {
 
-/// A property that is used to obtain the execution context that is associated
-/// with an executor.
+/// A property adapter that is used with the polymorphic executor wrapper
+/// to mark properties as preferable, but not requirable.
 template <typename Property>
 struct prefer_only
 {
-  /// The context_t property applies to executors.
+  /// The prefer_only adapter applies to the same types as the nested property.
   template <typename T>
-  static constexpr bool is_applicable_property_v = is_executor_v<T>;
+  static constexpr bool is_applicable_property_v =
+    is_applicable_property<T, Property>::value;
 
   /// The context_t property cannot be required.
   static constexpr bool is_requirable = false;
@@ -216,7 +216,7 @@ struct prefer_only :
 
   template <typename Executor, typename Property>
   friend ASIO_CONSTEXPR
-  typename prefer_result_type<const Executor&, const InnerProperty&>::type
+  typename prefer_result<const Executor&, const InnerProperty&>::type
   prefer(const Executor& ex, const prefer_only<Property>& p,
       typename enable_if<
         is_same<Property, InnerProperty>::value
@@ -234,7 +234,7 @@ struct prefer_only :
 
   template <typename Executor, typename Property>
   friend ASIO_CONSTEXPR
-  typename query_result_type<const Executor&, const InnerProperty&>::type
+  typename query_result<const Executor&, const InnerProperty&>::type
   query(const Executor& ex, const prefer_only<Property>& p,
       typename enable_if<
         is_same<Property, InnerProperty>::value
@@ -292,7 +292,7 @@ struct prefer_free_default<T, execution::prefer_only<InnerProperty>,
   ASIO_STATIC_CONSTEXPR(bool, is_noexcept =
     (is_nothrow_prefer<const T&, const InnerProperty&>::value));
 
-  typedef typename prefer_result_type<const T&,
+  typedef typename prefer_result<const T&,
       const InnerProperty&>::type result_type;
 };
 
@@ -310,7 +310,7 @@ struct query_free<T, execution::prefer_only<InnerProperty>,
   ASIO_STATIC_CONSTEXPR(bool, is_noexcept =
     (is_nothrow_query<const T&, const InnerProperty&>::value));
 
-  typedef typename query_result_type<const T&,
+  typedef typename query_result<const T&,
       const InnerProperty&>::type result_type;
 };
 

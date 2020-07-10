@@ -33,7 +33,7 @@ class co_spawn_work_guard
 {
 public:
   typedef typename decay<
-      typename prefer_result_type<Executor,
+      typename prefer_result<Executor,
         execution::outstanding_work_t::tracked_t
       >::type
     >::type executor_type;
@@ -52,6 +52,8 @@ private:
   executor_type executor_;
 };
 
+#if !defined(ASIO_NO_TS_EXECUTORS)
+
 template <typename Executor>
 struct co_spawn_work_guard<Executor,
     typename enable_if<
@@ -63,6 +65,8 @@ struct co_spawn_work_guard<Executor,
   {
   }
 };
+
+#endif // !defined(ASIO_NO_TS_EXECUTORS)
 
 template <typename Executor>
 inline co_spawn_work_guard<Executor>

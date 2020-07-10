@@ -101,12 +101,12 @@ struct is_nothrow_prefer :
 
 /// A type trait that determines the result type of a @c prefer expression.
 /**
- * Class template @c prefer_result_type is a trait that determines the result
+ * Class template @c prefer_result is a trait that determines the result
  * type of the expression <tt>asio::prefer(std::declval<T>(),
  * std::declval<Properties>()...)</tt>.
  */
 template <typename T, typename... Properties>
-struct prefer_result_type
+struct prefer_result
 {
   /// The result of the @c prefer expression.
   typedef automatically_determined type;
@@ -370,7 +370,7 @@ struct call_traits<T, void(P0, P1, PN ASIO_ELLIPSIS),
 struct impl
 {
   template <typename T, typename Property>
-  ASIO_CONSTEXPR typename enable_if<
+  ASIO_NODISCARD ASIO_CONSTEXPR typename enable_if<
     call_traits<T, void(Property)>::overload == identity,
     typename call_traits<T, void(Property)>::result_type
   >::type
@@ -384,7 +384,7 @@ struct impl
   }
 
   template <typename T, typename Property>
-  ASIO_CONSTEXPR typename enable_if<
+  ASIO_NODISCARD ASIO_CONSTEXPR typename enable_if<
     call_traits<T, void(Property)>::overload == call_require_member,
     typename call_traits<T, void(Property)>::result_type
   >::type
@@ -399,7 +399,7 @@ struct impl
   }
 
   template <typename T, typename Property>
-  ASIO_CONSTEXPR typename enable_if<
+  ASIO_NODISCARD ASIO_CONSTEXPR typename enable_if<
     call_traits<T, void(Property)>::overload == call_require_free,
     typename call_traits<T, void(Property)>::result_type
   >::type
@@ -415,7 +415,7 @@ struct impl
   }
 
   template <typename T, typename Property>
-  ASIO_CONSTEXPR typename enable_if<
+  ASIO_NODISCARD ASIO_CONSTEXPR typename enable_if<
     call_traits<T, void(Property)>::overload == call_prefer_member,
     typename call_traits<T, void(Property)>::result_type
   >::type
@@ -430,7 +430,7 @@ struct impl
   }
 
   template <typename T, typename Property>
-  ASIO_CONSTEXPR typename enable_if<
+  ASIO_NODISCARD ASIO_CONSTEXPR typename enable_if<
     call_traits<T, void(Property)>::overload == call_prefer_free,
     typename call_traits<T, void(Property)>::result_type
   >::type
@@ -446,7 +446,7 @@ struct impl
   }
 
   template <typename T, typename P0, typename P1>
-  ASIO_CONSTEXPR typename enable_if<
+  ASIO_NODISCARD ASIO_CONSTEXPR typename enable_if<
     call_traits<T, void(P0, P1)>::overload == two_props,
     typename call_traits<T, void(P0, P1)>::result_type
   >::type
@@ -466,7 +466,7 @@ struct impl
 
   template <typename T, typename P0, typename P1,
     typename ASIO_ELLIPSIS PN>
-  ASIO_CONSTEXPR typename enable_if<
+  ASIO_NODISCARD ASIO_CONSTEXPR typename enable_if<
     call_traits<T, void(P0, P1, PN ASIO_ELLIPSIS)>::overload == n_props,
     typename call_traits<T, void(P0, P1, PN ASIO_ELLIPSIS)>::result_type
   >::type
@@ -610,7 +610,7 @@ constexpr bool is_nothrow_prefer_v
 #if defined(ASIO_HAS_VARIADIC_TEMPLATES)
 
 template <typename T, typename... Properties>
-struct prefer_result_type
+struct prefer_result
 {
   typedef typename asio_prefer_fn::call_traits<
       T, void(Properties...)>::result_type type;
@@ -620,28 +620,28 @@ struct prefer_result_type
 
 template <typename T, typename P0 = void,
     typename P1 = void, typename P2 = void>
-struct prefer_result_type
+struct prefer_result
 {
   typedef typename asio_prefer_fn::call_traits<
       T, void(P0, P1, P2)>::result_type type;
 };
 
 template <typename T, typename P0, typename P1>
-struct prefer_result_type<T, P0, P1>
+struct prefer_result<T, P0, P1>
 {
   typedef typename asio_prefer_fn::call_traits<
       T, void(P0, P1)>::result_type type;
 };
 
 template <typename T, typename P0>
-struct prefer_result_type<T, P0>
+struct prefer_result<T, P0>
 {
   typedef typename asio_prefer_fn::call_traits<
       T, void(P0)>::result_type type;
 };
 
 template <typename T>
-struct prefer_result_type<T>
+struct prefer_result<T>
 {
 };
 

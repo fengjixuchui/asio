@@ -18,9 +18,15 @@
 #include "asio/detail/config.hpp"
 #include "asio/detail/type_traits.hpp"
 #include "asio/execution/executor.hpp"
+#include "asio/execution/scheduler.hpp"
+#include "asio/execution/sender.hpp"
 #include "asio/is_applicable_property.hpp"
 #include "asio/traits/query_static_constexpr_member.hpp"
 #include "asio/traits/static_query.hpp"
+
+#if defined(ASIO_HAS_STD_ANY)
+# include <any>
+#endif // defined(ASIO_HAS_STD_ANY)
 
 #include "asio/detail/push_options.hpp"
 
@@ -34,15 +40,19 @@ namespace execution {
 /// with an executor.
 struct context_t
 {
-  /// The context_t property applies to executors.
+  /// The context_t property applies to executors, senders, and schedulers.
   template <typename T>
-  static constexpr bool is_applicable_property_v = is_executor_v<T>;
+  static constexpr bool is_applicable_property_v =
+    is_executor_v<T> || is_sender_v<T> || is_scheduler_v<T>;
 
   /// The context_t property cannot be required.
   static constexpr bool is_requirable = false;
 
   /// The context_t property cannot be preferred.
   static constexpr bool is_preferable = false;
+
+  /// The type returned by queries against an @c any_executor.
+  typedef std::any polymorphic_query_result_type;
 };
 
 /// A special value used for accessing the context_t property.
@@ -61,11 +71,16 @@ struct context_t
 #if defined(ASIO_HAS_VARIABLE_TEMPLATES)
   template <typename T>
   ASIO_STATIC_CONSTEXPR(bool,
-    is_applicable_property_v = is_executor<T>::value);
+    is_applicable_property_v = is_executor<T>::value
+      || is_sender<T>::value || is_scheduler<T>::value);
 #endif // defined(ASIO_HAS_VARIABLE_TEMPLATES)
 
   ASIO_STATIC_CONSTEXPR(bool, is_requirable = false);
   ASIO_STATIC_CONSTEXPR(bool, is_preferable = false);
+
+#if defined(ASIO_HAS_STD_ANY)
+  typedef std::any polymorphic_query_result_type;
+#endif // defined(ASIO_HAS_STD_ANY)
 
   ASIO_CONSTEXPR context_t()
   {
@@ -122,7 +137,10 @@ namespace { static const context_t& context = context_t::instance; }
 
 template <typename T>
 struct is_applicable_property<T, execution::context_t>
-  : execution::is_executor<T>
+  : integral_constant<bool,
+      execution::is_executor<T>::value
+        || execution::is_sender<T>::value
+        || execution::is_scheduler<T>::value>
 {
 };
 

@@ -171,7 +171,7 @@ namespace detail {
  * compute the return type of the require call:
  *
  * @code asio::io_context io_context;
- * typename asio::require_result_type<
+ * typename asio::require_result<
  *     asio::io_context::executor_type,
  *     asio::exeution::outstanding_work_t::tracked_t>
  *   work = asio::require(io_context.get_executor(),
@@ -690,7 +690,7 @@ public:
 #endif // defined(ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
 
   /// Destructor.
-  ~basic_executor_type()
+  ~basic_executor_type() ASIO_NOEXCEPT
   {
     if (Bits & outstanding_work_tracked)
       if (io_context_)
@@ -1101,21 +1101,20 @@ asio::detail::service_id<Type> service_base<Type>::id;
 
 #if !defined(GENERATING_DOCUMENTATION)
 
-namespace execution {
+namespace traits {
 
-#if !defined(ASIO_HAS_DEDUCED_EXECUTION_IS_EXECUTOR_TRAIT)
+#if !defined(ASIO_HAS_DEDUCED_EQUALITY_COMPARABLE_TRAIT)
 
 template <typename Allocator, unsigned int Bits>
-struct is_executor<
+struct equality_comparable<
     asio::io_context::basic_executor_type<Allocator, Bits>
-  > : true_type
+  >
 {
+  ASIO_STATIC_CONSTEXPR(bool, is_valid = true);
+  ASIO_STATIC_CONSTEXPR(bool, is_noexcept = true);
 };
 
-#endif // !defined(ASIO_HAS_DEDUCED_EXECUTION_IS_EXECUTOR_TRAIT)
-
-} // namespace execution
-namespace traits {
+#endif // !defined(ASIO_HAS_DEDUCED_EQUALITY_COMPARABLE_TRAIT)
 
 #if !defined(ASIO_HAS_DEDUCED_EXECUTE_MEMBER_TRAIT)
 
