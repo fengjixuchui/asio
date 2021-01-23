@@ -2,7 +2,7 @@
 // impl/defer.hpp
 // ~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2020 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2021 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -103,7 +103,8 @@ public:
         execution::is_executor<
           typename conditional<true, executor_type, CompletionHandler>::type
         >::value
-        &&
+      >::type* = 0,
+      typename enable_if<
         !detail::is_work_dispatcher_required<
           typename decay<CompletionHandler>::type,
           Executor
@@ -129,7 +130,8 @@ public:
         execution::is_executor<
           typename conditional<true, executor_type, CompletionHandler>::type
         >::value
-        &&
+      >::type* = 0,
+      typename enable_if<
         detail::is_work_dispatcher_required<
           typename decay<CompletionHandler>::type,
           Executor
@@ -160,7 +162,8 @@ public:
         !execution::is_executor<
           typename conditional<true, executor_type, CompletionHandler>::type
         >::value
-        &&
+      >::type* = 0,
+      typename enable_if<
         !detail::is_work_dispatcher_required<
           typename decay<CompletionHandler>::type,
           Executor
@@ -181,7 +184,8 @@ public:
         !execution::is_executor<
           typename conditional<true, executor_type, CompletionHandler>::type
         >::value
-        &&
+      >::type* = 0,
+      typename enable_if<
         detail::is_work_dispatcher_required<
           typename decay<CompletionHandler>::type,
           Executor
