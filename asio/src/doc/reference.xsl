@@ -51,6 +51,8 @@
 [include requirements/AsyncReadStream.qbk]
 [include requirements/AsyncWriteStream.qbk]
 [include requirements/BufferedHandshakeHandler.qbk]
+[include requirements/CancellationHandler.qbk]
+[include requirements/CancellationSlot.qbk]
 [include requirements/CompletionCondition.qbk]
 [include requirements/CompletionHandler.qbk]
 [include requirements/ConnectCondition.qbk]
@@ -110,7 +112,9 @@
             contains(compoundname, 'asio::') and
             not(contains(compoundname, '::detail')) and
             not(contains(compoundname, '::service::key')) and
+            not(contains(compoundname, '::cancellation_state::impl')) and
             not(contains(compoundname, '_handler')) and
+            not(contains(compoundname, '_helper')) and
             not(contains(compoundname, 'std_allocator_void')) and
             not(contains(compoundname, 'thread_function')) and
             not(contains(compoundname, 'context_impl')) and
@@ -124,6 +128,7 @@
         <xsl:if test="
             not(contains(ancestor::*/compoundname, '::detail')) and
             not(contains(ancestor::*/compoundname, '::service::key')) and
+            not(contains(ancestor::*/compoundname, '::cancellation_state::impl')) and
             not(contains(ancestor::*/compoundname, '_helper')) and
             not(contains(ancestor::*/compoundname, 'initiate_')) and
             not(contains(name, '_helper')) and
@@ -328,6 +333,18 @@
       <xsl:call-template name="make-id">
         <xsl:with-param name="name"
          select="concat(substring-before($name, '~'), '_', substring-after($name, '~'))"/>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:when test="contains($name, '^')">
+      <xsl:call-template name="make-id">
+        <xsl:with-param name="name"
+         select="concat(substring-before($name, '^'), '_hat_', substring-after($name, '^'))"/>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:when test="contains($name, '|')">
+      <xsl:call-template name="make-id">
+        <xsl:with-param name="name"
+         select="concat(substring-before($name, '|'), '_pipe_', substring-after($name, '|'))"/>
       </xsl:call-template>
     </xsl:when>
     <xsl:when test="contains($name, ',')">
@@ -818,6 +835,11 @@
       <xsl:with-param name="name" select="compoundname"/>
     </xsl:call-template>
   </xsl:variable>
+  <xsl:variable name="escaped-class-name">
+    <xsl:call-template name="escape-name">
+      <xsl:with-param name="text" select="$class-name"/>
+    </xsl:call-template>
+  </xsl:variable>
   <xsl:variable name="unqualified-class-name">
     <xsl:call-template name="strip-ns">
       <xsl:with-param name="name" select="compoundname"/>
@@ -831,7 +853,7 @@
   <xsl:variable name="class-file" select="location/@file"/>
 [section:<xsl:value-of select="$class-id"/><xsl:text> </xsl:text><xsl:value-of select="$class-name"/>]
 
-[indexterm1 asio.indexterm.<xsl:value-of select="$class-id"/>..<xsl:value-of select="$class-name"/>]
+[indexterm1 asio.indexterm.<xsl:value-of select="$class-id"/>..<xsl:value-of select="$escaped-class-name"/>]
 
 <xsl:apply-templates select="briefdescription" mode="markup"/><xsl:text>
 
@@ -1475,7 +1497,15 @@
 <xsl:template name="enum">
 <xsl:param name="enum-name"/>
 <xsl:param name="id"/>
-  enum <xsl:value-of select="name"/><xsl:text>
+<xsl:text>  enum </xsl:text>
+<xsl:if test="name='cancellation_type'">
+  <xsl:text>class </xsl:text>
+</xsl:if>
+<xsl:value-of select="name"/>
+<xsl:if test="name='cancellation_type'">
+  <xsl:text> : unsigned int</xsl:text>
+</xsl:if>
+<xsl:text>
 </xsl:text><xsl:if test="count(enumvalue) &gt; 0">
 <xsl:value-of select="$newline"/>
 <xsl:for-each select="enumvalue">
@@ -1549,6 +1579,9 @@
         <xsl:when test="declname = 'Args'">
           <xsl:value-of select="declname"/>
         </xsl:when>
+        <xsl:when test="declname = 'Associator'">
+          <xsl:value-of select="declname"/>
+        </xsl:when>
         <xsl:when test="declname = 'AwaitableExecutor'">
           <xsl:value-of select="concat('``[link asio.reference.Executor1 ', declname, ']``')"/>
         </xsl:when>
@@ -1577,6 +1610,9 @@
           <xsl:value-of select="declname"/>
         </xsl:when>
         <xsl:when test="declname = 'Context_Service'">
+          <xsl:value-of select="declname"/>
+        </xsl:when>
+        <xsl:when test="declname = 'DefaultCandidate'">
           <xsl:value-of select="declname"/>
         </xsl:when>
         <xsl:when test="declname = 'Duration'">
@@ -1609,13 +1645,28 @@
         <xsl:when test="declname = 'F'">
           <xsl:value-of select="declname"/>
         </xsl:when>
+        <xsl:when test="declname = 'F1'">
+          <xsl:value-of select="declname"/>
+        </xsl:when>
+        <xsl:when test="declname = 'F2'">
+          <xsl:value-of select="declname"/>
+        </xsl:when>
+        <xsl:when test="declname = 'Filter'">
+          <xsl:value-of select="declname"/>
+        </xsl:when>
         <xsl:when test="declname = 'Function'">
           <xsl:value-of select="declname"/>
         </xsl:when>
         <xsl:when test="declname = 'IoObjectService1'">
           <xsl:value-of select="concat('``[link asio.reference.IoObjectService ', declname, ']``')"/>
         </xsl:when>
+        <xsl:when test="declname = 'Impl'">
+          <xsl:value-of select="declname"/>
+        </xsl:when>
         <xsl:when test="declname = 'Implementation'">
+          <xsl:value-of select="declname"/>
+        </xsl:when>
+        <xsl:when test="declname = 'InFilter'">
           <xsl:value-of select="declname"/>
         </xsl:when>
         <xsl:when test="declname = 'Initiation'">
@@ -1624,10 +1675,16 @@
         <xsl:when test="declname = 'InnerExecutor'">
           <xsl:value-of select="concat('``[link asio.reference.Executor1 ', declname, ']``')"/>
         </xsl:when>
+        <xsl:when test="declname = 'InnerExecutor1'">
+          <xsl:value-of select="concat('``[link asio.reference.Executor1 ', declname, ']``')"/>
+        </xsl:when>
         <xsl:when test="declname = 'IoObjectsOrExecutors'">
           <xsl:value-of select="declname"/>
         </xsl:when>
         <xsl:when test="declname = 'Iterator'">
+          <xsl:value-of select="declname"/>
+        </xsl:when>
+        <xsl:when test="declname = 'Mask'">
           <xsl:value-of select="declname"/>
         </xsl:when>
         <xsl:when test="declname = 'MatchCondition'">
@@ -1642,6 +1699,9 @@
         <xsl:when test="declname = 'OtherAllocator'">
           <xsl:value-of select="declname"/>
         </xsl:when>
+        <xsl:when test="declname = 'OtherCancellationSlot'">
+          <xsl:value-of select="concat('``[link asio.reference.CancellationSlot ', declname, ']``')"/>
+        </xsl:when>
         <xsl:when test="declname = 'OtherExecutor'">
           <xsl:value-of select="concat('``[link asio.reference.Executor1 ', declname, ']``')"/>
         </xsl:when>
@@ -1649,6 +1709,9 @@
           <xsl:value-of select="declname"/>
         </xsl:when>
         <xsl:when test="declname = 'OtherSupportableProperties'">
+          <xsl:value-of select="declname"/>
+        </xsl:when>
+        <xsl:when test="declname = 'OutFilter'">
           <xsl:value-of select="declname"/>
         </xsl:when>
         <xsl:when test="declname = 'OutstandingWork'">
